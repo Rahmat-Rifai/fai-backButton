@@ -1,0 +1,25 @@
+# Build output
+bin/
+obj/
+dist/
+publish/
+
+# dotnet local install
+.dotnet/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs & diag
+*.log
+gbf-diag.log
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store

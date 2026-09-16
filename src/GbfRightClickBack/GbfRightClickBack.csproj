@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+    <AssemblyName>GbfRightClickBack</AssemblyName>
+    <RootNamespace>GbfRightClickBack</RootNamespace>
+    <Description>GBF Right Click Back - Right-click acts as Back button on Granblue Fantasy</Description>
+    <Version>1.0.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!-- UIAutomation tersedia via UseWPF -->
+
+</Project>
