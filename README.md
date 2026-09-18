@@ -1,96 +1,57 @@
 # Back Button Customizer for Windows
 
-Aplikasi Windows modern untuk mengkustomisasi tombol mouse (tombol samping fisik **Back / XButton1**, **Forward / XButton2**, **Klik Kanan**, dan **Klik Tengah**) agar dapat memicu berbagai aksi seperti **Browser / File Explorer Back (`Alt+Left`)**, **Forward (`Alt+Right`)**, **Tutup Tab (`Ctrl+W`)**, **Buka Ulang Tab (`Ctrl+Shift+T`)**, **Reload (`F5`)**, **Copy / Paste**, **navigasi ke URL custom**, hingga **Kombinasi Shortcut Keyboard Kustom** apa pun.
+Aplikasi Windows untuk me-remap tombol mouse (tombol samping Back/XButton1, Forward/XButton2, Klik Kanan, dan Klik Tengah) ke berbagai aksi seperti navigasi browser, shortcut keyboard, dan URL custom.
 
-Aplikasi ini dapat berjalan secara:
-1. **Global (Semua Aplikasi Windows)** — Berfungsi di File Explorer, browser, software office, code editor, dll.
-2. **Aplikasi Tertentu (.exe)** — Hanya aktif di aplikasi target (misal `chrome.exe`, `msedge.exe`, `code.exe`).
-3. **Website / Domain Tertentu** — Hanya aktif ketika browser membuka website tertentu (misal `game.granbluefantasy.jp`, `youtube.com`, dll).
+Scope aturan:
+1. Global: Berfungsi di semua aplikasi Windows (File Explorer, browser, text editor).
+2. Per-aplikasi: Aktif hanya pada file `.exe` tertentu (misalnya `chrome.exe` atau `code.exe`).
+3. Per-domain: Aktif saat tab browser membuka website tertentu (misalnya `game.granbluefantasy.jp`). Deteksi tab memakai Windows UI Automation dan Chrome DevTools Protocol (CDP) tanpa perlu ekstensi browser.
 
-> Ringan (~0% CPU), tanpa browser extension, tanpa butuh hak Administrator, aman dan 100% proses lokal.
+## Fitur
 
----
-
-## Fitur Utama
-
-- **Kustomisasi Multi-Tombol**:
-  - Tombol Samping 1 (**XButton1 / Back mouse**)
-  - Tombol Samping 2 (**XButton2 / Forward mouse**)
-  - **Klik Kanan** (Right Mouse Button)
-  - **Klik Tengah** (Middle Click / Scroll Wheel Click)
-- **Aksi Fleksibel & Lengkap**:
-  - `Back (Alt + ←)`
-  - `Forward (Alt + →)`
-  - `Tutup Tab (Ctrl + W)`
-  - `Buka Ulang Tab (Ctrl + Shift + T)`
-  - `Reload (F5)`
-  - `Tab Baru (Ctrl + T)`
-  - `Tab Berikutnya (Ctrl + Tab)`
-  - `Copy (Ctrl + C)` / `Paste (Ctrl + V)` / `Undo (Ctrl + Z)`
-  - `Enter` / `Escape`
-  - **Kustom Shortcut Keyboard**: Rekam tombol langsung via GUI (misal `Ctrl+Shift+P`, `Win+D`, dll).
-  - **Buka URL (Custom)**: Navigasi tab browser yang sedang aktif ke URL yang diinput user. Pakai **CDP WebSocket** (`Page.navigate`) jika browser dijalankan dengan `--remote-debugging-port=9222`; otomatis fallback ke browser default (`Process.Start`) bila CDP tidak tersedia.
-- **Fleksibilitas Cakupan (Scope)**:
-  - **Global**: Berlaku di seluruh sistem Windows.
-  - **Aplikasi Tertentu**: Bisa pilih file `.exe` atau klik **"Ambil Window..."** untuk mendeteksi langsung dari aplikasi yang sedang terbuka.
-  - **Website Tertentu**: Deteksi tab aktif browser via **Windows UI Automation** dan **CDP** (otomatis tanpa extension).
-- **Multi-Aturan (Multi-Rule)**: Pengguna bisa membuat banyak aturan sekaligus (misal: Tombol Back Mouse = Back Global, dan Klik Kanan = Back khusus saat bermain Granblue Fantasy di Chrome).
-- **Preset Cepat**: Tombol menu preset untuk konfigurasi cepat sekali klik.
-- **Autostart Windows**: Opsi langsung di aplikasi untuk otomatis berjalan saat Windows dinyalakan.
-- **Tema UI Terang & Gelap (Light / Dark Mode)**.
-- **System Tray**: Minimalkan ke tray, status aktif real-time, toggle Enable/Disable, dan mode diagnostik.
-
----
+- Tombol mouse yang didukung: XButton1 (Back), XButton2 (Forward), Klik Kanan, Klik Tengah.
+- Aksi bawaan: Back (`Alt+Left`), Forward (`Alt+Right`), Tutup Tab (`Ctrl+W`), Buka Ulang Tab (`Ctrl+Shift+T`), Reload (`F5`), Tab Baru (`Ctrl+T`), Tab Berikutnya (`Ctrl+Tab`), Copy/Paste/Undo, Enter, Escape.
+- Shortcut keyboard custom: Rekam kombinasi tombol langsung lewat antarmuka pengaturan.
+- Buka URL custom: Mengarahkan tab browser yang aktif via CDP WebSocket (`Page.navigate`) jika browser dijalankan dengan remote debugging, atau fallback ke browser default (`Process.Start`).
+- Multi-rule: Konfigurasi terpisah untuk tiap kombinasi tombol dan target window/website.
+- System tray: Minimalkan ke taskbar tray, status aktif real-time, toggle aktif/nonaktif, dan opsi autostart saat Windows boot.
 
 ## Cara Menjalankan
 
-Aplikasi sudah dibuild dan siap digunakan di folder `dist\`:
+Aplikasi siap digunakan di folder `dist\`:
 
-1. **Versi Portable (Rekomendasi)**:
-   Buka `dist\portable\GbfRightClickBack.exe` (langsung jalan tanpa install .NET Runtime).
-2. **Versi Framework-Dependent**:
-   Buka `dist\framework-dependent\GbfRightClickBack.exe` (ukuran file sangat kecil ~180 KB, membutuhkan .NET 8 Runtime).
+1. Versi portable:
+   Buka `dist\portable\GbfRightClickBack.exe` (berjalan mandiri tanpa perlu install .NET Runtime).
+2. Versi framework-dependent:
+   Buka `dist\framework-dependent\GbfRightClickBack.exe` (membutuhkan .NET 8 Runtime).
 
-Saat dijalankan:
-- Jendela pengaturan akan otomatis muncul pada saat aplikasi pertama kali dibuka.
-- Ikon aplikasi akan berada di System Tray (pojok kanan taskbar dekat jam).
-- Double-click ikon tray kapan saja untuk membuka kembali Pengaturan.
+Penggunaan:
+- Jendela pengaturan muncul otomatis saat pertama kali dibuka.
+- Ikon aplikasi berada di system tray. Klik dua kali ikon tray untuk membuka kembali pengaturan.
 
----
+## Cara Mengatur Aturan
 
-## Cara Menggunakan GUI Pengaturan
-
-1. **Memilih / Menambah Aturan**:
-   - Di panel kiri terdapat daftar aturan aktif.
-   - Klik **"+ Baru"** untuk membuat aturan baru, atau klik **"Preset…"** untuk memilih konfigurasi siap pakai.
-2. **Mengatur Tombol & Aksi**:
-   - Pilih tombol mouse pemicu (misal: `Tombol Samping 1 (XButton1 / Back)` atau `Klik Kanan`).
-   - Pilih aksi yang diinginkan (misal: `Back (Alt + ←)` atau `Kustom…`).
-   - Jika memilih `Kustom…`, klik **"Rekam…"** lalu tekan kombinasi tombol di keyboard.
-3. **Menentukan Cakupan Target (Scope)**:
-   - Pilih **Semua Aplikasi (Global Windows)** jika ingin tombol tersebut selalu berfungsi di mana pun.
-   - Pilih **Aplikasi Tertentu (.exe)** lalu klik **"Pilih .exe…"** atau **"Ambil Window…"** untuk memilih software target.
-   - Pilih **Website / Domain Tertentu** dan masukkan nama domain (misal: `game.granbluefantasy.jp`).
-4. **Menyimpan Perubahan**:
-   - Klik **"Tes Aksi"** untuk mencoba aksi.
-   - Klik tombol **"Simpan"** untuk menyimpan ke `config.json`. Pengaturan langsung aktif secara instan tanpa perlu merestart aplikasi.
-
----
+1. Tambah aturan:
+   Klik "+ Baru" di panel kiri, atau klik "Preset..." untuk konfigurasi siap pakai.
+2. Atur tombol & aksi:
+   Pilih tombol pemicu dan aksi yang diinginkan. Jika memilih opsi custom, klik "Rekam..." lalu tekan kombinasi shortcut di keyboard.
+3. Tentukan scope:
+   Pilih "Semua Aplikasi", "Aplikasi Tertentu (.exe)" (bisa via "Ambil Window..."), atau "Website / Domain Tertentu".
+4. Simpan:
+   Klik "Tes Aksi" untuk mencoba, lalu klik "Simpan". Perubahan langsung aktif tanpa restart aplikasi.
 
 ## Build dari Source Code
 
-### Persyaratan
-- Windows 10 / 11 (x64)
-- .NET 8 SDK (<https://dotnet.microsoft.com/download/dotnet/8.0>)
+Prasyarat:
+- Windows 10/11 (x64)
+- .NET 8 SDK
 
-### Langkah Build
-
-Cukup jalankan file batch:
+Jalankan script batch:
 ```bat
 build.bat
 ```
 
-Atau via command line dotnet:
+Atau via CLI dotnet:
 ```bat
 REM Build Release Framework-Dependent:
 dotnet publish src\GbfRightClickBack\GbfRightClickBack.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -o dist\framework-dependent
@@ -99,8 +60,6 @@ REM Build Release Portable (Self-Contained):
 dotnet publish src\GbfRightClickBack\GbfRightClickBack.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o dist\portable
 ```
 
----
+## File Konfigurasi
 
-## File Konfigurasi (`config.json`)
-
-Konfigurasi disimpan secara otomatis di sebelah file `.exe` (atau di `%APPDATA%\BackButtonCustomizer\config.json`). Anda juga dapat membukanya langsung dengan mengklik tombol **"Buka Folder Config"** di bagian bawah jendela aplikasi.
+Konfigurasi disimpan di sebelah file `.exe` atau di `%APPDATA%\BackButtonCustomizer\config.json`. Anda juga bisa membukanya lewat tombol "Buka Folder Config" di jendela aplikasi.
